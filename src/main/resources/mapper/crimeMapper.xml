@@ -7,5 +7,18 @@
         select main_crime_class, mid_crime_class, ${region} from crime_region where main_crime_class like '%강력%'
     </select>
 
+    <select id="getOfficeData" resultType="com.example.final_crime.dto.OfficeDTO">
+        select * from test limit 1;
+    </select>
+
+    <select id="getOffice" parameterType="double" resultType="com.example.final_crime.dto.OfficeDTO">
+       <![CDATA[ SELECT * FROM test WHERE 6371 * 2 * ASIN(SQRT(POWER(SIN(RADIANS(${lat} - lat) / 2), 2)+COS(RADIANS(${lat})) * COS(RADIANS(lat)) * POWER(SIN(RADIANS(${lng} - lng) / 2), 2)))<=0.5 limit 1]]>;
+    </select>
+
+    <select id="getOffice1km" parameterType="double" resultType="com.example.final_crime.dto.OfficeDTO">
+        <![CDATA[ SELECT * FROM test WHERE 6371 * 2 * ASIN(SQRT(POWER(SIN(RADIANS(${lat} - lat) / 2), 2)+COS(RADIANS(${lat})) * COS(RADIANS(lat)) * POWER(SIN(RADIANS(${lng} - lng) / 2), 2)))<=0.5 limit 1]]>;
+    </select>
+
+
 
 </mapper>

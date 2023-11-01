@@ -1,6 +1,7 @@
 package com.example.final_crime.controllers;
 
 import com.example.final_crime.dto.CrimeDTO;
+import com.example.final_crime.dto.OfficeDTO;
 import com.example.final_crime.services.CrimeService;
 import com.google.gson.*;
 import com.google.maps.GeoApiContext;
@@ -8,10 +9,7 @@ import com.google.maps.GeocodingApi;
 import com.google.maps.model.GeocodingResult;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -28,8 +26,40 @@ public class CrimeController {
         return "hi";
     }
 
+    @GetMapping("/getOfficee")
+    public String getOffice() throws Exception {
+        OfficeDTO dto = new OfficeDTO();
+        dto = crimeService.getOfficeData();
+        String sendJson = "{coordinate:{lat:"+dto.getLat()+",lng:"+dto.getLng()+"},office:"+dto.getOffice()+", crime_data : {murder:"+dto.getMurder()+",robbery:"+dto.getRobbery()+",theft:"+dto.getTheft()+",violence:"+dto.getViolence()+"}}";
+        return sendJson;
+    }
+
+    @GetMapping("/getOffice")
+    public String getOfficeWithRegion(@RequestParam("lat")double lat, @RequestParam("lng") double lng) throws Exception {
+//        lat = 37.563185;
+//        lng = 126.991361;
+
+        //서울 서대문 경찰서 근처
+//        lat = 37.562956;
+//        lng = 126.966359;
+
+        //Query 1 500m
+        OfficeDTO dto = crimeService.getOffice(lat,lng);
+        //Qurey 2 1000m
+        dto = crimeService.getOffice1km(lat,lng);
+        //Qurey 3 1500m
+
+        System.out.println(lat+" " +lng);
+
+        String sendJson = "{coordinate:{lat:"+dto.getLat()+",lng:"+dto.getLng()+"},office:"+dto.getOffice()+", crime_data : {murder:"+dto.getMurder()+",robbery:"+dto.getRobbery()+",theft:"+dto.getTheft()+",violence:"+dto.getViolence()+"}}";
+        return sendJson;
+    }
+
     @GetMapping("/getData/{region}")
     public String getDatas(@PathVariable("region") String region) throws Exception{
+
+
+
         JsonObject newJson = new JsonObject();
         try{
             GeoApiContext context = new GeoApiContext.Builder()
