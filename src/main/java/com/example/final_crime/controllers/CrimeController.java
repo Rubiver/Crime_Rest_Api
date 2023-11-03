@@ -35,7 +35,7 @@ public class CrimeController {
     }
 
     @GetMapping("/getOffice")
-    public String getOfficeWithRegion(@RequestParam("lat")double lat, @RequestParam("lng") double lng) throws Exception {
+    public JsonObject getOfficeWithRegion(@RequestParam("lat")double lat, @RequestParam("lng") double lng) throws Exception {
 //        lat = 37.563185;
 //        lng = 126.991361;
 
@@ -52,7 +52,9 @@ public class CrimeController {
         System.out.println(lat+" " +lng);
 
         String sendJson = "{coordinate:{lat:"+dto.getLat()+",lng:"+dto.getLng()+"},office:"+dto.getOffice()+", crime_data : {murder:"+dto.getMurder()+",robbery:"+dto.getRobbery()+",theft:"+dto.getTheft()+",violence:"+dto.getViolence()+"}}";
-        return sendJson;
+        JsonObject newJson = new JsonObject();
+        newJson = JsonParser.parseString(sendJson).getAsJsonObject();
+        return newJson;
     }
 
     @GetMapping("/getData/{region}")
