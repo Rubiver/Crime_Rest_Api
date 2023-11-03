@@ -46,7 +46,7 @@ public class CrimeController {
         //Query 1 500m
         OfficeDTO dto = crimeService.getOffice(lat,lng);
         //Qurey 2 1000m
-        dto = crimeService.getOffice1km(lat,lng);
+        //dto = crimeService.getOffice1km(lat,lng);
         //Qurey 3 1500m
 
         System.out.println(lat+" " +lng);
