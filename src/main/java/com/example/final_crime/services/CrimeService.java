@@ -39,4 +39,8 @@ public class CrimeService {
         data.put("lng",lng);
         return crimeMapper.getOffice1km(data);
     }
+
+    public List<OfficeDTO> allOffice() throws Exception{
+        return crimeMapper.allOffice();
+    }
 }

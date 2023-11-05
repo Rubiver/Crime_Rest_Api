@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,12 +27,23 @@ public class CrimeController {
         return "hi";
     }
 
-    @GetMapping("/getOfficee")
+    @GetMapping("/allOffice")
     public String getOffice() throws Exception {
-        OfficeDTO dto = new OfficeDTO();
-        dto = crimeService.getOfficeData();
-        String sendJson = "{coordinate:{lat:"+dto.getLat()+",lng:"+dto.getLng()+"},office:"+dto.getOffice()+", crime_data : {murder:"+dto.getMurder()+",robbery:"+dto.getRobbery()+",theft:"+dto.getTheft()+",violence:"+dto.getViolence()+"}}";
-        return sendJson;
+        List<OfficeDTO> list = crimeService.allOffice();
+        List<String> data = new ArrayList<>();
+        Gson gson = new Gson();
+
+        String stations = "{";
+
+        for(int i=0; i<list.size(); i++){
+            stations = "{coordinate:{lat:"+list.get(i).getLat()+",lng:"+list.get(i).getLng()+"},office:"+list.get(i).getOffice()+", crime_data : {murder:"+list.get(i).getMurder()+",robbery:"+list.get(i).getRobbery()+",theft:"+list.get(i).getTheft()+",violence:"+list.get(i).getViolence()+"}}";
+            data.add(stations);
+        }
+
+        System.out.println(stations);
+        System.out.println(data);
+
+        return gson.toJson(data);
     }
 
     @GetMapping("/getOffice")

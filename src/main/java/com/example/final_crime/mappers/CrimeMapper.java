@@ -15,4 +15,6 @@ public interface CrimeMapper {
     public OfficeDTO getOffice(Map<String,Double> data) throws Exception;
 
     public OfficeDTO getOffice1km(Map<String,Double> data) throws Exception;
+
+    public List<OfficeDTO> allOffice() throws Exception;
 }
