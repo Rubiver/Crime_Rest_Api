@@ -28,7 +28,7 @@ public class CrimeController {
     }
 
     @GetMapping("/allOffice")
-    public String getOffice() throws Exception {
+    public JsonArray getOffice() throws Exception {
         List<OfficeDTO> list = crimeService.allOffice();
         List<String> data = new ArrayList<>();
         Gson gson = new Gson();
@@ -39,11 +39,12 @@ public class CrimeController {
             stations = "{coordinate:{lat:"+list.get(i).getLat()+",lng:"+list.get(i).getLng()+"},office:"+list.get(i).getOffice()+", crime_data : {murder:"+list.get(i).getMurder()+",robbery:"+list.get(i).getRobbery()+",theft:"+list.get(i).getTheft()+",violence:"+list.get(i).getViolence()+"}}";
             data.add(stations);
         }
+        stations = stations + "}";
 
         System.out.println(stations);
         System.out.println(data);
-
-        return gson.toJson(data);
+        JsonArray js = JsonParser.parseString(data.toString()).getAsJsonArray();
+        return js;
     }
 
     @GetMapping("/getOffice")
