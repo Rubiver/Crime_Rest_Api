@@ -1,6 +1,8 @@
 package com.example.final_crime.controllers;
 
+import com.example.final_crime.dto.CenterDTO;
 import com.example.final_crime.dto.CrimeDTO;
+import com.example.final_crime.dto.FacilityDTO;
 import com.example.final_crime.dto.OfficeDTO;
 import com.example.final_crime.services.CrimeService;
 import com.google.gson.*;
@@ -37,6 +39,52 @@ public class CrimeController {
     @GetMapping("/get")
     public String get(){
         return "hi";
+    }
+
+    @GetMapping("/allCenter")
+    public JsonArray getCenter() throws Exception {
+        List<CenterDTO> list = crimeService.allCenter();
+        List<String> data = new ArrayList<>();
+        Gson gson = new Gson();
+
+
+        for(int i=0; i<list.size(); i++){
+            String stations = "{agency:'"+list.get(i).getAgency()+"',police_office:'"+list.get(i).getPolice_office()+"',office_name:'"+list.get(i).getGovernment_office_name()+"',division:'"+list.get(i).getDivision()+"',center_name:'"+list.get(i).getCenter_name()+"',address:'"+list.get(i).getAddress()+"'}";
+            data.add(stations);
+        }
+
+        System.out.println(data);
+        JsonArray js = JsonParser.parseString(data.toString()).getAsJsonArray();
+        return js;
+    }
+    @GetMapping("/allFacility")
+    public JsonArray getSafeFacility() throws Exception{
+        List<FacilityDTO> list = crimeService.allFacility();
+        List<String> data = new ArrayList<>();
+        String match = "[^\uAC00-\uD7A3xfe0-9a-zA-Z~!@#$%^&*()_+|<>?:{}]";
+        Gson gson = new Gson();
+
+        for(int i=0; i<list.size(); i++){
+            String facility = "";
+            if(list.get(i).getPhone().contains(match)){
+                String tempPhone = list.get(i).getPhone().replaceAll(match,"");
+                facility = "{coordinate:{lat:'"+list.get(i).getLat()+"',lng:'"+list.get(i).getLng()+"'},location:'"+list.get(i).getLocation_1()+"',code:'"+list.get(i).getFacility_code()+"',name:'"+list.get(i).getName()+"',phone:'"+tempPhone+"'}";
+            }else{
+                facility = "{coordinate:{lat:'"+list.get(i).getLat()+"',lng:'"+list.get(i).getLng()+"'},location:'"+list.get(i).getLocation_1()+"',code:'"+list.get(i).getFacility_code()+"',name:'"+list.get(i).getName()+"',phone:'"+list.get(i).getPhone()+"'}";;
+            }
+
+            data.add(facility);
+        }
+        JsonArray js = new JsonArray();
+        System.out.println(data);
+        try{
+            js = JsonParser.parseString(data.toString()).getAsJsonArray();
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            return js;
+        }
     }
 
     private static final String UPLOAD_DIR = "uploads";

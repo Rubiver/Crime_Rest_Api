@@ -1,6 +1,8 @@
 package com.example.final_crime.services;
 
+import com.example.final_crime.dto.CenterDTO;
 import com.example.final_crime.dto.CrimeDTO;
+import com.example.final_crime.dto.FacilityDTO;
 import com.example.final_crime.dto.OfficeDTO;
 import com.example.final_crime.mappers.CrimeMapper;
 import lombok.RequiredArgsConstructor;
@@ -42,5 +44,13 @@ public class CrimeService {
 
     public List<OfficeDTO> allOffice() throws Exception{
         return crimeMapper.allOffice();
+    }
+
+    public List<FacilityDTO> allFacility() throws Exception{
+        return crimeMapper.allFacility();
+    }
+
+    public List<CenterDTO> allCenter() throws Exception{
+        return crimeMapper.allCenter();
     }
 }

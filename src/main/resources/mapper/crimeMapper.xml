@@ -27,6 +27,13 @@
         select * from test;
     </select>
 
+    <select id="allFacility" resultType="com.example.final_crime.dto.FacilityDTO">
+        select * from safe_facility where phone is not null;
+    </select>
+
+    <select id="allCenter" resultType="com.example.final_crime.dto.CenterDTO">
+        select * from safe_center;
+    </select>
 
 
 </mapper>
