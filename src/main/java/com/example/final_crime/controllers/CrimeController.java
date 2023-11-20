@@ -9,11 +9,11 @@ import com.google.gson.*;
 import com.google.maps.GeoApiContext;
 import com.google.maps.GeocodingApi;
 import com.google.maps.model.GeocodingResult;
+import jakarta.annotation.Resource;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
-import org.springframework.http.ResponseEntity;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -157,6 +157,22 @@ public class CrimeController {
 
 	private static final String UPLOAD_DIR = "uploads";
 
+	@GetMapping("/download/{fileName:.+}")
+	public ResponseEntity<Resource> downloadFile(@PathVariable String fileName) {
+		File file = new File(UPLOAD_DIR + "/" + fileName);
+
+		Resource resource = (Resource) new FileSystemResource(file);
+
+		HttpHeaders headers = new HttpHeaders();
+		headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + fileName);
+		headers.add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_OCTET_STREAM_VALUE);
+
+		return ResponseEntity.ok()
+				.headers(headers)
+				.contentLength(file.length())
+				.body(resource);
+	}
+
 	@PostMapping("/audioUpload")
 	public ResponseEntity<String> handleAudioUpload(@RequestParam("audio") MultipartFile audioFile) {
 		if (audioFile.isEmpty()) {
@@ -169,8 +185,7 @@ public class CrimeController {
 
 			// WAV 파일을 저장할 디렉토리를 설정합니다.
 			Path uploadPath = Paths.get(UPLOAD_DIR);
-			String filePath = uploadPath.toAbsolutePath().toString() + File.separator + audioFile.getOriginalFilename()
-					+ ".wav";
+			String filePath = uploadPath.toAbsolutePath().toString() + File.separator + audioFile.getOriginalFilename();
 
 			// 디렉토리가 없으면 생성합니다.
 			File dir = new File(uploadPath.toAbsolutePath().toString());
