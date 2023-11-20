@@ -158,7 +158,7 @@ public class CrimeController {
 	private static final String UPLOAD_DIR = "uploads";
 
 	@PostMapping("/audioUpload")
-	public ResponseEntity<String> handleAudioUpload(@RequestBody MultipartFile audioFile) {
+	public ResponseEntity<String> handleAudioUpload(@RequestParam("audio") MultipartFile audioFile) {
 		if (audioFile.isEmpty()) {
 			return new ResponseEntity<>("업로드된 파일이 없습니다.", HttpStatus.BAD_REQUEST);
 		}
