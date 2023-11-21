@@ -157,10 +157,10 @@ public class CrimeController {
 
 	private static final String UPLOAD_DIR = "uploads";
 	@GetMapping("/download/{fileName:.+}")
-	public ResponseEntity<Resource> downloadFile(@PathVariable String fileName) {
+	public ResponseEntity<FileSystemResource> downloadFile(@PathVariable String fileName) {
 		File file = new File(UPLOAD_DIR + "/" + fileName);
 
-		Resource resource = (Resource) new FileSystemResource(file);
+		FileSystemResource resource = new FileSystemResource(file);
 
 		HttpHeaders headers = new HttpHeaders();
 		headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + fileName);
