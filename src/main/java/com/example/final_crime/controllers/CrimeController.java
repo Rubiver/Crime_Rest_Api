@@ -108,7 +108,7 @@ public class CrimeController {
 		Gson gson = new Gson();
 
 		for (int i = 0; i < list.size(); i++) {
-			String stations = "{agency:'" + list.get(i).getAgency() + "',police_office:'"
+			String stations = "{coordinate:{lat:'" + list.get(i).getLat() + "',lng:'" + list.get(i).getLng()+"'},agency:'" + list.get(i).getAgency() + "',police_office:'"
 					+ list.get(i).getPolice_office() + "',office_name:'" + list.get(i).getGovernment_office_name()
 					+ "',division:'" + list.get(i).getDivision() + "',center_name:'" + list.get(i).getCenter_name()
 					+ "',address:'" + list.get(i).getAddress() + "'}";
@@ -156,7 +156,6 @@ public class CrimeController {
 	}
 
 	private static final String UPLOAD_DIR = "uploads";
-
 	@GetMapping("/download/{fileName:.+}")
 	public ResponseEntity<Resource> downloadFile(@PathVariable String fileName) {
 		File file = new File(UPLOAD_DIR + "/" + fileName);
@@ -173,6 +172,7 @@ public class CrimeController {
 				.body(resource);
 	}
 
+	//public static int count = 0;
 	@PostMapping("/audioUpload")
 	public ResponseEntity<String> handleAudioUpload(@RequestParam("audio") MultipartFile audioFile) {
 		if (audioFile.isEmpty()) {
@@ -283,7 +283,7 @@ public class CrimeController {
 			stations = "{coordinate:{lat:" + list.get(i).getLat() + ",lng:" + list.get(i).getLng() + "},office:"
 					+ list.get(i).getOffice() + ", crime_data : {murder:" + list.get(i).getMurder() + ",robbery:"
 					+ list.get(i).getRobbery() + ",theft:" + list.get(i).getTheft() + ",violence:"
-					+ list.get(i).getViolence() + "}}";
+					+ list.get(i).getViolence() + "},address:'"+list.get(i).getAddress()+"'}";
 			data.add(stations);
 		}
 		stations = stations + "}";
@@ -314,7 +314,7 @@ public class CrimeController {
 
 		String sendJson = "{coordinate:{lat:" + dto.getLat() + ",lng:" + dto.getLng() + "},office:" + dto.getOffice()
 				+ ", crime_data : {murder:" + dto.getMurder() + ",robbery:" + dto.getRobbery() + ",theft:"
-				+ dto.getTheft() + ",violence:" + dto.getViolence() + "}}";
+				+ dto.getTheft() + ",violence:" + dto.getViolence() + "},address:'"+dto.getAddress()+"'}";
 		JsonObject newJson = new JsonObject();
 		newJson = JsonParser.parseString(sendJson).getAsJsonObject();
 		return newJson;

@@ -2,6 +2,10 @@ package com.example.final_crime.dto;
 
 public class CenterDTO {
     private int sequence;
+
+    private double lat;
+
+    private double lng;
     private String agency;
     private String police_office;
     private String government_office_name;
@@ -12,14 +16,16 @@ public class CenterDTO {
     public CenterDTO() {
     }
 
-    public CenterDTO(int sequence, String agency, String police_office, String government_office_name, String division, String center_name, String adress) {
+    public CenterDTO(int sequence, double lat, double lng, String agency, String police_office, String government_office_name, String division, String center_name, String address) {
         this.sequence = sequence;
+        this.lat = lat;
+        this.lng = lng;
         this.agency = agency;
         this.police_office = police_office;
         this.government_office_name = government_office_name;
         this.division = division;
         this.center_name = center_name;
-        this.address = adress;
+        this.address = address;
     }
 
     public int getSequence() {
@@ -28,6 +34,22 @@ public class CenterDTO {
 
     public void setSequence(int sequence) {
         this.sequence = sequence;
+    }
+
+    public double getLat() {
+        return lat;
+    }
+
+    public void setLat(double lat) {
+        this.lat = lat;
+    }
+
+    public double getLng() {
+        return lng;
+    }
+
+    public void setLng(double lng) {
+        this.lng = lng;
     }
 
     public String getAgency() {
@@ -74,7 +96,7 @@ public class CenterDTO {
         return address;
     }
 
-    public void setAdress(String adress) {
-        this.address = adress;
+    public void setAddress(String address) {
+        this.address = address;
     }
 }

@@ -10,11 +10,12 @@ public class OfficeDTO {
     private String robbery;
     private String theft;
     private String violence;
+    private String address;
 
     public OfficeDTO() {
     }
 
-    public OfficeDTO(double lat, double lng, String year, String office, String murder, String robbery, String theft, String violence) {
+    public OfficeDTO(double lat, double lng, String year, String office, String murder, String robbery, String theft, String violence, String address) {
         this.lat = lat;
         this.lng = lng;
         this.year = year;
@@ -23,6 +24,7 @@ public class OfficeDTO {
         this.robbery = robbery;
         this.theft = theft;
         this.violence = violence;
+        this.address = address;
     }
 
     public double getLat() {
@@ -87,5 +89,13 @@ public class OfficeDTO {
 
     public void setViolence(String violence) {
         this.violence = violence;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 }
