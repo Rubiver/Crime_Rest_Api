@@ -1,9 +1,6 @@
 package com.example.final_crime.mappers;
 
-import com.example.final_crime.dto.CenterDTO;
-import com.example.final_crime.dto.CrimeDTO;
-import com.example.final_crime.dto.FacilityDTO;
-import com.example.final_crime.dto.OfficeDTO;
+import com.example.final_crime.dto.*;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -23,4 +20,6 @@ public interface CrimeMapper {
     public List<FacilityDTO> allFacility() throws Exception;
 
     public List<CenterDTO> allCenter() throws Exception;
+
+    public int uploadLocation(UploadDTO dto) throws Exception;
 }

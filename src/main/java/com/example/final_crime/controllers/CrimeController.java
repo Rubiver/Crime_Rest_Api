@@ -1,9 +1,6 @@
 package com.example.final_crime.controllers;
 
-import com.example.final_crime.dto.CenterDTO;
-import com.example.final_crime.dto.CrimeDTO;
-import com.example.final_crime.dto.FacilityDTO;
-import com.example.final_crime.dto.OfficeDTO;
+import com.example.final_crime.dto.*;
 import com.example.final_crime.services.CrimeService;
 import com.google.gson.*;
 import com.google.maps.GeoApiContext;
@@ -46,6 +43,12 @@ public class CrimeController {
 	@GetMapping("/get")
 	public String getd() {
 		return "hi";
+	}
+
+	@PostMapping("/uploadLocation")
+	public ResponseEntity<Integer> uploadLocation(UploadDTO dto) throws Exception{
+		int result = crimeService.uploadLocation(dto);
+		return ResponseEntity.ok(result);
 	}
 
 	@GetMapping("/getNews")

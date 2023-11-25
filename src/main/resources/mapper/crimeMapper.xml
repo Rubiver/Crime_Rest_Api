@@ -35,5 +35,9 @@
         select * from safe_center;
     </select>
 
+    <insert id="uploadLocation" parameterType="com.example.final_crime.dto.UploadDTO">
+        insert into report values(0, ${lat},${lng},#{timestamp});
+    </insert>
+
 
 </mapper>

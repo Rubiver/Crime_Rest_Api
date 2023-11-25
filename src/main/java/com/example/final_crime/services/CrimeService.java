@@ -1,9 +1,6 @@
 package com.example.final_crime.services;
 
-import com.example.final_crime.dto.CenterDTO;
-import com.example.final_crime.dto.CrimeDTO;
-import com.example.final_crime.dto.FacilityDTO;
-import com.example.final_crime.dto.OfficeDTO;
+import com.example.final_crime.dto.*;
 import com.example.final_crime.mappers.CrimeMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,5 +49,9 @@ public class CrimeService {
 
     public List<CenterDTO> allCenter() throws Exception{
         return crimeMapper.allCenter();
+    }
+
+    public int uploadLocation(UploadDTO dto) throws Exception{
+        return crimeMapper.uploadLocation(dto);
     }
 }
