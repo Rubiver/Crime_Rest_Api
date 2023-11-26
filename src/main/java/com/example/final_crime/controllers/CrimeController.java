@@ -363,9 +363,24 @@ public class CrimeController {
 		// 서울 서대문 경찰서 근처
 //        lat = 37.562956;
 //        lng = 126.966359;
-
+		OfficeDTO dto = new OfficeDTO();
 		// Query 1 500m
-		OfficeDTO dto = crimeService.getOffice(lat, lng);
+
+		dto = crimeService.getOffice1km(lat, lng);
+		if(dto == null){
+			dto = crimeService.getOffice2km(lat,lng);
+			System.out.println("2km");
+		}
+
+		if(dto == null){
+			dto = crimeService.getOffice(lat,lng);
+			System.out.println("5km");
+		}
+
+		if(dto == null){
+			dto = crimeService.getOffice10km(lat,lng);
+			System.out.println("10km");
+		}
 		// Qurey 2 1000m
 		// dto = crimeService.getOffice1km(lat,lng);
 		// Qurey 3 1500m

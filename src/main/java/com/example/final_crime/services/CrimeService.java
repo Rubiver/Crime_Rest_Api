@@ -39,6 +39,20 @@ public class CrimeService {
         return crimeMapper.getOffice1km(data);
     }
 
+    public OfficeDTO getOffice2km(double lat, double lng) throws Exception{
+        Map<String,Double> data = new HashMap<>();
+        data.put("lat",lat);
+        data.put("lng",lng);
+        return crimeMapper.getOffice2km(data);
+    }
+
+    public OfficeDTO getOffice10km(double lat, double lng) throws Exception{
+        Map<String,Double> data = new HashMap<>();
+        data.put("lat",lat);
+        data.put("lng",lng);
+        return crimeMapper.getOffice10km(data);
+    }
+
     public List<OfficeDTO> allOffice() throws Exception{
         return crimeMapper.allOffice();
     }
