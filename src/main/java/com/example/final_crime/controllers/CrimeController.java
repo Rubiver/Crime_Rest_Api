@@ -177,6 +177,12 @@ public class CrimeController {
 		}
 		System.out.println(audioFile.toString());
 		try {
+			byte[] filedata = audioFile.getBytes();
+			System.out.println("file data"+filedata);
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+		try {
 			// 업로드된 PCM 파일을 WAV로 변환하여 저장합니다.
 			//byte[] wavData = convertPCMtoWAV(audioFile.getBytes());
 			File read = new File(String.valueOf(audioFile));
