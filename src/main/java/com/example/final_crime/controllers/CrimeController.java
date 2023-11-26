@@ -168,9 +168,10 @@ public class CrimeController {
 				.body(resource);
 	}
 
-	//public static int count = 0;
+	public static int count = 0;
 	@PostMapping("/audioUpload")
 	public ResponseEntity<String> handleAudioUpload(@RequestParam("audio") MultipartFile audioFile) {
+		count++;
 		if (audioFile.isEmpty()) {
 			return new ResponseEntity<>("업로드된 파일이 없습니다.", HttpStatus.BAD_REQUEST);
 		}
@@ -190,7 +191,7 @@ public class CrimeController {
 				dir.mkdirs();
 			}
 
-			File out = new File("uploads/audio.wav");
+			File out = new File("uploads/audio_"+count+".wav");
 			PCMToWAV(read,out, 1, 8000, 16);
 
 			// WAV 파일을 저장합니다.
@@ -199,6 +200,10 @@ public class CrimeController {
 //			}
 			System.out.println(audioFile.toString());
 			System.out.println(filePath);
+
+			if(count == 10){
+				count = 0;
+			}
 
 			return new ResponseEntity<>("오디오 파일이 성공적으로 업로드되었습니다.", HttpStatus.OK);
 		} catch (IOException e) {
