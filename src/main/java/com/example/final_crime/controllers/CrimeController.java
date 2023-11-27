@@ -198,7 +198,7 @@ public class CrimeController {
 			}
 
 			File out = new File("uploads/audio_"+count+".wav");
-			PCMToWAV(read,out, 1, 8000, 16);
+			PCMToWAV(read,out, 1, 44100, 16);
 
 			// WAV 파일을 저장합니다.
 //			try (OutputStream outputStream = new FileOutputStream(filePath)) {
