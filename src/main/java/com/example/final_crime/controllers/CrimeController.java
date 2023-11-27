@@ -19,12 +19,14 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.ByteBuffer;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
@@ -170,10 +172,10 @@ public class CrimeController {
 
 	public static int count = 0;
 	@PostMapping("/audioUpload")
-	public ResponseEntity<String> handleAudioUpload(@RequestParam("audio") MultipartFile audioFile) {
+	public ResponseEntity<Boolean> handleAudioUpload(@RequestParam("audio") MultipartFile audioFile) {
 		count++;
 		if (audioFile.isEmpty()) {
-			return new ResponseEntity<>("업로드된 파일이 없습니다.", HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
 		}
 		System.out.println(audioFile.toString());
 		try {
@@ -198,7 +200,7 @@ public class CrimeController {
 			}
 
 			File out = new File("uploads/audio_"+count+".wav");
-			PCMToWAV(read,out, 1, 8000, 16);
+			PCMToWAV(read,out, 1, 44100, 16);
 
 			// WAV 파일을 저장합니다.
 //			try (OutputStream outputStream = new FileOutputStream(filePath)) {
@@ -209,12 +211,31 @@ public class CrimeController {
 
 			if(count == 10){
 				count = 0;
+				String folderPath = "uploads/";
+
+				// 파일 이름 패턴
+				String fileNamePattern = "audio_\\d+\\.wav";
+
+				// 폴더 내의 파일 목록을 가져오기
+				Path folderPathObj = Paths.get(folderPath);
+				Files.walk(folderPathObj)
+						.filter(Files::isRegularFile)
+						.filter(path -> path.getFileName().toString().matches(fileNamePattern))
+						.collect(Collectors.toList())
+						.forEach(path -> {
+							try {
+								Files.delete(path);
+								System.out.println("파일 삭제 성공: " + path.getFileName());
+							} catch (IOException e) {
+								System.out.println("파일 삭제 실패: " + path.getFileName());
+							}
+						});
 			}
 
-			return new ResponseEntity<>("오디오 파일이 성공적으로 업로드되었습니다.", HttpStatus.OK);
+			return new ResponseEntity<>(true, HttpStatus.OK);
 		} catch (IOException e) {
 			e.printStackTrace();
-			return new ResponseEntity<>("오디오 파일 업로드 중 오류가 발생했습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(false, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
