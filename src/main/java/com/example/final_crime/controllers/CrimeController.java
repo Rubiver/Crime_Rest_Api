@@ -40,6 +40,43 @@ public class CrimeController {
 		return "hi";
 	}
 
+	@GetMapping("/getCenter")
+	public JsonObject getCenterWithCorodinate(@RequestParam("lat") double lat, @RequestParam("lng") double lng)
+			throws Exception {
+		CenterDTO dto = new CenterDTO();
+		// Query 1 500m
+
+		dto = crimeService.getCenter1km(lat, lng);
+		if(dto == null){
+			dto = crimeService.getCenter2km(lat,lng);
+			System.out.println("2km");
+		}
+
+		if(dto == null){
+			dto = crimeService.getCenter(lat,lng);
+			System.out.println("5km");
+		}
+
+		if(dto == null){
+			dto = crimeService.getCenter10km(lat,lng);
+			System.out.println("10km");
+		}
+		if(dto == null){
+			dto = crimeService.getCenter20km(lat,lng);
+			System.out.println("20km");
+		}
+
+		System.out.println(lat + " " + lng);
+
+		String sendJson = "{coordinate:{lat:'" + dto.getLat() + "',lng:'" + dto.getLng()+"'},agency:'"+ dto.getAgency() + "',police_office:'"
+				+ dto.getPolice_office() + "',office_name:'" + dto.getGovernment_office_name()
+				+ "',division:'" + dto.getDivision() + "',center_name:'" + dto.getCenter_name()
+				+ "',address:'" + dto.getAddress() + "'}";
+		JsonObject newJson = new JsonObject();
+		newJson = JsonParser.parseString(sendJson).getAsJsonObject();
+		return newJson;
+	}
+
 	@PostMapping("/uploadLocation")
 	public ResponseEntity<Integer> uploadLocation(UploadDTO dto) throws Exception{
 		int result = crimeService.uploadLocation(dto);

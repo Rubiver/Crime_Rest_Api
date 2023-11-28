@@ -27,6 +27,26 @@
         <![CDATA[ SELECT * FROM test WHERE 6371 * 2 * ASIN(SQRT(POWER(SIN(RADIANS(${lat} - lat) / 2), 2)+COS(RADIANS(${lat})) * COS(RADIANS(lat)) * POWER(SIN(RADIANS(${lng} - lng) / 2), 2)))<=10 limit 1]]>;
     </select>
 
+    <select id="getCenter" parameterType="double" resultType="com.example.final_crime.dto.CenterDTO">
+        <![CDATA[ SELECT * FROM safe_center WHERE 6371 * ACOS(COS(RADIANS(lat)) * COS(RADIANS(${lat})) * COS(RADIANS(lng) - RADIANS(${lng}))+SIN(RADIANS(lat)) * SIN(RADIANS(${lat}))) <= 5 limit 1]]>;
+    </select>
+
+    <select id="getCenter1km" parameterType="double" resultType="com.example.final_crime.dto.CenterDTO">
+        <![CDATA[ SELECT * FROM safe_center WHERE 6371 * ACOS(COS(RADIANS(lat)) * COS(RADIANS(${lat})) * COS(RADIANS(lng) - RADIANS(${lng}))+SIN(RADIANS(lat)) * SIN(RADIANS(${lat}))) <= 1 limit 1]]>;
+    </select>
+
+    <select id="getCenter2km" parameterType="double" resultType="com.example.final_crime.dto.CenterDTO">
+        <![CDATA[ SELECT * FROM safe_center WHERE 6371 * ACOS(COS(RADIANS(lat)) * COS(RADIANS(${lat})) * COS(RADIANS(lng) - RADIANS(${lng}))+SIN(RADIANS(lat)) * SIN(RADIANS(${lat}))) <= 2 limit 1]]>;
+    </select>
+
+    <select id="getCenter10km" parameterType="double" resultType="com.example.final_crime.dto.CenterDTO">
+        <![CDATA[ SELECT * FROM safe_center WHERE 6371 * ACOS(COS(RADIANS(lat)) * COS(RADIANS(${lat})) * COS(RADIANS(lng) - RADIANS(${lng}))+SIN(RADIANS(lat)) * SIN(RADIANS(${lat}))) <= 10 limit 1]]>;
+    </select>
+
+    <select id="getCenter20km" parameterType="double" resultType="com.example.final_crime.dto.CenterDTO">
+        <![CDATA[ SELECT * FROM safe_center WHERE 6371 * ACOS(COS(RADIANS(lat)) * COS(RADIANS(${lat})) * COS(RADIANS(lng) - RADIANS(${lng}))+SIN(RADIANS(lat)) * SIN(RADIANS(${lat}))) <= 20 limit 1]]>;
+    </select>
+
     <select id="allOffice" resultType="com.example.final_crime.dto.OfficeDTO">
         select * from test;
     </select>

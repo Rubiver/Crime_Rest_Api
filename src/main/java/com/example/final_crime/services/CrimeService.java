@@ -53,6 +53,41 @@ public class CrimeService {
         return crimeMapper.getOffice10km(data);
     }
 
+    public CenterDTO getCenter(double lat, double lng) throws Exception{
+        Map<String,Double> data = new HashMap<>();
+        data.put("lat",lat);
+        data.put("lng",lng);
+        return crimeMapper.getCenter(data);
+    }
+
+    public CenterDTO getCenter1km(double lat, double lng) throws Exception{
+        Map<String,Double> data = new HashMap<>();
+        data.put("lat",lat);
+        data.put("lng",lng);
+        return crimeMapper.getCenter1km(data);
+    }
+
+    public CenterDTO getCenter2km(double lat, double lng) throws Exception{
+        Map<String,Double> data = new HashMap<>();
+        data.put("lat",lat);
+        data.put("lng",lng);
+        return crimeMapper.getCenter2km(data);
+    }
+
+    public CenterDTO getCenter10km(double lat, double lng) throws Exception{
+        Map<String,Double> data = new HashMap<>();
+        data.put("lat",lat);
+        data.put("lng",lng);
+        return crimeMapper.getCenter10km(data);
+    }
+
+    public CenterDTO getCenter20km(double lat, double lng) throws Exception{
+        Map<String,Double> data = new HashMap<>();
+        data.put("lat",lat);
+        data.put("lng",lng);
+        return crimeMapper.getCenter20km(data);
+    }
+
     public List<OfficeDTO> allOffice() throws Exception{
         return crimeMapper.allOffice();
     }

@@ -19,6 +19,15 @@ public interface CrimeMapper {
 
     public OfficeDTO getOffice10km(Map<String,Double> data) throws Exception;
 
+    public CenterDTO getCenter(Map<String,Double> data) throws Exception;
+
+    public CenterDTO getCenter1km(Map<String,Double> data) throws Exception;
+
+    public CenterDTO getCenter2km(Map<String,Double> data) throws Exception;
+
+    public CenterDTO getCenter10km(Map<String,Double> data) throws Exception;
+    public CenterDTO getCenter20km(Map<String,Double> data) throws Exception;
+
     public List<OfficeDTO> allOffice() throws Exception;
 
     public List<FacilityDTO> allFacility() throws Exception;

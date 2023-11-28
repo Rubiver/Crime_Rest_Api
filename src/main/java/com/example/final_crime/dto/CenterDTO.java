@@ -4,7 +4,6 @@ public class CenterDTO {
     private int sequence;
 
     private double lat;
-
     private double lng;
     private String agency;
     private String police_office;
